@@ -24,7 +24,7 @@ export const AppDataSource = new DataSource({
 
 AppDataSource.initialize()
   .then(res => {
-    console.log('connexion réussite');
+    console.log('connexion établie');
 
   }).catch(error => {
     console.log("Erreur de la connexion ==>" + error);

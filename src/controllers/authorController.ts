@@ -25,10 +25,14 @@ router.post("/", async (req: Request, res: Response) => {
 // Get all authors
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const allAuthors = await AppDataSource.getRepository(Author)
-      .createQueryBuilder("author")
+    const allAuthors = await AppDataSource.getRepository(Author).find({
+      relations: {
+        photos: true
+      }
+    });
+      /*.createQueryBuilder("author")
       .leftJoinAndSelect("author.photos", "photo")
-      .getMany();
+      .getMany();*/
 
     if (allAuthors) {
       return res.status(200).json(allAuthors);
