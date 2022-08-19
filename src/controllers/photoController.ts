@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { AppDataSource } from "../index";
+import { AppDataSource } from "../config/dbConfig";
 import { Photo } from "../entities/Photo";
 import { Author } from "../entities/Author";
 

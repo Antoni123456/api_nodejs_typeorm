@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { AppDataSource } from "../index";
+import { AppDataSource } from "../config/dbConfig";
 import { Author } from "../entities/Author";
 
 // Create author in database
