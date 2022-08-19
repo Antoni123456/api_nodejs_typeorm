@@ -12,13 +12,13 @@ router.post("/", async (req: Request, res: Response) => {
       const { name, description, filename, views, isPublished } = req.body;
       const nameAuthor: string = req.body.author.name;
 
-      // instanciation objet author
+      // instanciation d'objet author
       const author = new Author();
       author.name = nameAuthor;
 
       await AppDataSource.manager.save(author);
 
-      // instanciation de notre objet Photo
+      // instanciation d'objet Photo
       const photo = new Photo();
       photo.name = name;
       photo.description = description;
@@ -27,8 +27,8 @@ router.post("/", async (req: Request, res: Response) => {
       photo.isPublished = isPublished;
       photo.author = author;
 
-      const photoRepository = AppDataSource.getRepository(Photo);
-      await photoRepository.save(photo);
+      // save in datbase
+      await AppDataSource.getRepository(Photo).save(photo);
 
       return res.status(201).json(photo);
     }
@@ -69,15 +69,15 @@ router.put("/:id", async (req: Request, res: Response) => {
 
 // Suppression
 router.delete("/:id", async (req, res) => {
-  const photoRepository = AppDataSource.getRepository(Photo);
-
   const idPhoto: number = +req.params.id;
 
   if (idPhoto) {
-    const photoToRemove = await photoRepository.findBy({ id: idPhoto });
-    await photoRepository.remove(photoToRemove);
+    const photoToRemove = await AppDataSource.getRepository(Photo).findBy({ id: idPhoto });
 
-    return res.json("Delete data successfully");
+    if (photoToRemove) {
+      await AppDataSource.getRepository(Photo).remove(photoToRemove);
+      return res.json("Delete data successfully");
+    }
   }
 });
 

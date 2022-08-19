@@ -27,7 +27,7 @@ AppDataSource.initialize()
     console.log('connexion établie');
 
   }).catch(error => {
-    console.log("Erreur de la connexion ==>" + error);
+    console.log("Erreur de la connexion ==> " + error);
   })
 
 app.use(bodyParser.json());

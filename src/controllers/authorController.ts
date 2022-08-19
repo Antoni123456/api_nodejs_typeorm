@@ -4,7 +4,7 @@ import { Author } from "../entity/Author";
 
 const router = express.Router();
 
-// Create author for in database
+// Create author in database
 router.post("/", async (req: Request, res: Response) => {
   try {
     if (req.body) {
