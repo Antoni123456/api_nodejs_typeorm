@@ -1,11 +1,10 @@
-import 'reflect-metadata';
-import express from 'express';
-import { DataSource } from 'typeorm';
-import { Photo } from './entity/Photo';
-import { Author } from './entity/Author';
-import { photoController } from './controllers/photoController';
-import bodyParser from 'body-parser';
-import { authorController } from './controllers/authorController';
+import "reflect-metadata";
+import express from "express";
+import { DataSource } from "typeorm";
+import { Photo } from "./entities/Photo";
+import { Author } from "./entities/Author";
+import bodyParser from "body-parser";
+import { routes } from "./routes/router";
 
 const app = express();
 
@@ -19,21 +18,20 @@ export const AppDataSource = new DataSource({
   database: "db_demo_type_orm",
   entities: [Photo, Author],
   synchronize: true,
-  logging: false
-})
+  logging: false,
+});
 
 AppDataSource.initialize()
-  .then(res => {
-    console.log('connexion établie');
-
-  }).catch(error => {
-    console.log("Erreur de la connexion ==> " + error);
+  .then((res) => {
+    console.log("connexion établie");
   })
+  .catch((error) => {
+    console.log("Erreur de la connexion ==> " + error);
+  });
 
 app.use(bodyParser.json());
-app.use('/photo', photoController);
-app.use('/author', authorController);
+routes(app);
 
 app.listen(4572, () => {
-  console.log('The application is listening on port 4572!');
-})
+  console.log("The application is listening on port 4572!");
+});

@@ -1,12 +1,10 @@
-import express, { Request, Response } from "express";
+import { Request, Response } from "express";
 import { AppDataSource } from "../index";
-import { Photo } from "../entity/Photo";
-import { Author } from "../entity/Author";
-
-const router = express.Router();
+import { Photo } from "../entities/Photo";
+import { Author } from "../entities/Author";
 
 // Enregistrement des données
-router.post("/", async (req: Request, res: Response) => {
+const savePhoto = async (req: Request, res: Response) => {
   try {
     if (req.body) {
       const { name, description, filename, views, isPublished } = req.body;
@@ -30,29 +28,29 @@ router.post("/", async (req: Request, res: Response) => {
       // save in datbase
       await AppDataSource.getRepository(Photo).save(photo);
 
-      return res.status(201).json(photo);
+      res.status(201).json(photo);
     }
   } catch (error) {
-    return res.status(500).json(error);
+    res.status(500).json(error);
   }
-});
+};
 
 // Parcourir les données
-router.get("/", async (req: Request, res: Response) => {
+const getAllPhotos = async (req: Request, res: Response) => {
   const allPhotos = await AppDataSource.getRepository(Photo)
     .createQueryBuilder("photo")
     .innerJoinAndSelect("photo.author", "author")
     .getMany();
 
   if (allPhotos) {
-    return res.status(200).json(allPhotos);
+    res.status(200).json(allPhotos);
   } else {
-    return res.status(400).json("Data not found!");
+    res.status(400).json("Data not found!");
   }
-});
+};
 
 // Mise à jour
-router.put("/:id", async (req: Request, res: Response) => {
+const editPhoto = async (req: Request, res: Response) => {
   const photoRepository = AppDataSource.getRepository(Photo);
 
   if (req.params.id) {
@@ -63,22 +61,24 @@ router.put("/:id", async (req: Request, res: Response) => {
     photoToUpdate.name = req.body.name;
     await photoRepository.save(photoToUpdate);
 
-    return res.json(photoToUpdate);
+    res.json(photoToUpdate);
   }
-});
+};
 
 // Suppression
-router.delete("/:id", async (req, res) => {
+const deletePhoto = async (req: Request, res: Response) => {
   const idPhoto: number = +req.params.id;
 
   if (idPhoto) {
-    const photoToRemove = await AppDataSource.getRepository(Photo).findBy({ id: idPhoto });
+    const photoToRemove = await AppDataSource.getRepository(Photo).findBy({
+      id: idPhoto,
+    });
 
     if (photoToRemove) {
       await AppDataSource.getRepository(Photo).remove(photoToRemove);
-      return res.json("Delete data successfully");
+      res.json("Delete data successfully");
     }
   }
-});
+};
 
-export { router as photoController };
+export { savePhoto, getAllPhotos, editPhoto, deletePhoto };

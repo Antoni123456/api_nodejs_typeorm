@@ -1,11 +1,9 @@
-import express, { Request, Response } from "express";
+import { Request, Response } from "express";
 import { AppDataSource } from "../index";
-import { Author } from "../entity/Author";
-
-const router = express.Router();
+import { Author } from "../entities/Author";
 
 // Create author in database
-router.post("/", async (req: Request, res: Response) => {
+const saveAuthor = async (req: Request, res: Response) => {
   try {
     if (req.body) {
       const name: string = req.body.name;
@@ -15,31 +13,31 @@ router.post("/", async (req: Request, res: Response) => {
 
       await AppDataSource.manager.save(author);
 
-      return res.status(201).json(author);
+      res.status(201).json(author);
     }
   } catch (error) {
-    return res.status(500).json(error);
+    res.status(500).json(error);
   }
-});
+};
 
 // Get all authors
-router.get("/", async (req: Request, res: Response) => {
+const getAllAuthors = async (req: Request, res: Response) => {
   try {
     const allAuthors = await AppDataSource.getRepository(Author).find({
       relations: {
-        photos: true
-      }
+        photos: true,
+      },
     });
-      /*.createQueryBuilder("author")
+    /*.createQueryBuilder("author")
       .leftJoinAndSelect("author.photos", "photo")
       .getMany();*/
 
     if (allAuthors) {
-      return res.status(200).json(allAuthors);
+      res.status(200).json(allAuthors);
     }
   } catch (error) {
-    return res.status(404).json(error);
+    res.status(404).json(error);
   }
-});
+};
 
-export { router as authorController };
+export { saveAuthor, getAllAuthors };
