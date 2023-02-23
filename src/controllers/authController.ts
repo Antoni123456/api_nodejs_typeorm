@@ -77,7 +77,7 @@ const signin = async (req: Request, res: Response) => {
       expiresIn: 86400, // 1 jour
     });
 
-    // Les infos à retourner avec Token
+    // Les infos user à retourner avec Token
     res.status(200).json({
       id: user?.id,
       username: user?.username,
