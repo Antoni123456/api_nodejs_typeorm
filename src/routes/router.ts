@@ -6,19 +6,30 @@ import {
   editPhoto,
   deletePhoto,
 } from "../controllers/photoController";
+import { uploadFile } from "../middleware/upload";
+import { uploadFiles } from "../controllers/uploadFileController";
+import { signin, signup } from "../controllers/authController";
+import { verifyToken } from "../middleware/authJwt";
 
 const router = express.Router();
 
 const routes = (app: any) => {
+  // endpoint security
+  router.post("/api/auth/register", signup);
+  router.post("/api/auth/signin", signin);
+
   // endpoint model Author
-  router.post("/author", saveAuthor);
+  router.post("/api/author", saveAuthor);
   router.get("/author", getAllAuthors);
 
   // endpoint model Photo
-  router.get("/photo", getAllPhotos);
-  router.post("/photo", savePhoto);
-  router.put("/photo/:id", editPhoto);
-  router.delete("/photo/:id", deletePhoto);
+  router.get("/api/photo", [verifyToken], getAllPhotos);
+  router.post("/api/photo", savePhoto);
+  router.put("/api/photo/:id", editPhoto);
+  router.delete("/api/photo/:id", deletePhoto);
+
+  // endpoint model Iamage
+  router.post("/api/upload", uploadFile.single("file"), uploadFiles);
 
   return app.use("/", router);
 };

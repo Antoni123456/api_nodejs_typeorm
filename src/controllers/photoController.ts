@@ -28,6 +28,7 @@ const savePhoto = async (req: Request, res: Response) => {
       // save in datbase
       await AppDataSource.getRepository(Photo).save(photo);
 
+
       res.status(201).json(photo);
     }
   } catch (error) {

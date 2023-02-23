@@ -1,6 +1,4 @@
 import { DataSource } from "typeorm";
-import { Photo } from "../entities/Photo";
-import { Author } from "../entities/Author";
 
 const AppDataSource = new DataSource({
   type: "mysql",
@@ -9,7 +7,7 @@ const AppDataSource = new DataSource({
   username: "root",
   password: "",
   database: "db_demo_type_orm",
-  entities: [Photo, Author],
+  entities: ["src/entities/*.ts"], // Toutes les entités disponibles
   synchronize: true,
   logging: false,
 });
