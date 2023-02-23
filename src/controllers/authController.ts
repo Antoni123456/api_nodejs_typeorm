@@ -12,7 +12,7 @@ import { AppDataSource } from "../config/dbConfig";
  */
 const signup = async (req: Request, res: Response) => {
   // Desctructuration de notre body
-  const { username, email, password } = req.body;
+  const { username, email, password, roles } = req.body;
 
   // La repository de notre classe User
   const userRepository = AppDataSource.getRepository(User);
@@ -23,6 +23,7 @@ const signup = async (req: Request, res: Response) => {
     user.username = username;
     user.email = email;
     user.password = bcrypt.hashSync(password, 8); // ici, on va crypter notre mdp
+    user.roles = roles?.length ? roles : ["user"];
 
     // Avant de persiter dans la base
     // on va verifier si l'user exite dans la base (mot clé = email)
@@ -82,6 +83,7 @@ const signin = async (req: Request, res: Response) => {
       id: user?.id,
       username: user?.username,
       email: user?.email,
+      roles: user?.roles,
       accessToken: token,
     });
   } catch (error) {

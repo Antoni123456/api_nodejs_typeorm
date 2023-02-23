@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Role } from "./Role";
 
 @Entity()
 export class User {
@@ -13,4 +14,7 @@ export class User {
 
   @Column({ nullable: false })
   password: string;
+
+  @Column({ type: "simple-array" })
+  roles: string[];
 }
