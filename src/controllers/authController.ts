@@ -87,7 +87,7 @@ const signin = async (req: Request, res: Response) => {
       accessToken: token,
     });
   } catch (error) {
-    res.status(500).json(`Erreur: ${error}`);
+    res.status(500).json(error);
   }
 };
 

@@ -9,7 +9,7 @@ import {
 import { uploadFile } from "../middleware/upload";
 import { uploadFiles } from "../controllers/uploadFileController";
 import { signin, signup } from "../controllers/authController";
-import { isAdmin, verifyToken } from "../middleware/authJwt";
+import { isUser, verifyToken } from "../middleware/authJwt";
 
 const router = express.Router();
 
@@ -23,7 +23,7 @@ const routes = (app: any) => {
   router.get("/author", getAllAuthors);
 
   // endpoint model Photo
-  router.get("/api/photo", [verifyToken, isAdmin], getAllPhotos);
+  router.get("/api/photo", [verifyToken, isUser], getAllPhotos);
   router.post("/api/photo", savePhoto);
   router.put("/api/photo/:id", editPhoto);
   router.delete("/api/photo/:id", deletePhoto);
