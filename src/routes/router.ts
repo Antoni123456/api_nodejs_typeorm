@@ -15,23 +15,23 @@ const router = express.Router();
 
 const routes = (app: any) => {
   // endpoint security
-  router.post("/api/auth/register", signup);
-  router.post("/api/auth/signin", signin);
+  router.post("/auth/register", signup);
+  router.post("/auth/signin", signin);
 
   // endpoint model Author
-  router.post("/api/author", saveAuthor);
+  router.post("/author", saveAuthor);
   router.get("/author", getAllAuthors);
 
   // endpoint model Photo
-  router.get("/api/photo", [verifyToken, isUser], getAllPhotos);
-  router.post("/api/photo", savePhoto);
-  router.put("/api/photo/:id", editPhoto);
-  router.delete("/api/photo/:id", deletePhoto);
+  router.get("/photo", [verifyToken, isUser], getAllPhotos);
+  router.post("/photo", savePhoto);
+  router.put("/photo/:id", editPhoto);
+  router.delete("/photo/:id", deletePhoto);
 
   // endpoint model Iamage
-  router.post("/api/upload", uploadFile.single("file"), uploadFiles);
+  router.post("/upload", uploadFile.single("file"), uploadFiles);
 
-  return app.use("/", router);
+  return app.use("/api", router);
 };
 
 export { routes };
