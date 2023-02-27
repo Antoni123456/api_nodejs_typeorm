@@ -55,7 +55,7 @@ const getPagination = (data: any[], page: number, limit: number) => {
  * @param res
  */
 const getAllPhotos = async (req: Request, res: Response) => {
-  // Récuperation de la nombre de page et taille via client
+  // Récuperation nombre de page et taille via client
   const { page, size } = req.body;
 
   // Calcule des éléments à ignorer

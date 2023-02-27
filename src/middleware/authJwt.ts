@@ -6,7 +6,7 @@ import { AppDataSource } from "../config/dbConfig";
 import { User } from "../entities/User";
 
 /**
- * Verification token de l'utilisateur en question
+ * Verification token
  * @param req 
  * @param res 
  * @param next 
@@ -29,7 +29,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
 };
 
 /**
- * Autorisation pour l'user ADMIN uniquement
+ * Autorisation ADMIN
  * @param req 
  * @param res 
  * @param next 
@@ -56,7 +56,7 @@ const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 /**
- * Autorisation pour l'user simple
+ * Autorisation USER
  * @param req 
  * @param res 
  * @param next 
