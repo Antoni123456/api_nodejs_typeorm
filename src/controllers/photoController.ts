@@ -58,7 +58,7 @@ const getAllPhotos = async (req: Request, res: Response) => {
   // Récuperation de la nombre de page et taille via client
   const { page, size } = req.body;
 
-  // Calcule des élément à ignorer
+  // Calcule des éléments à ignorer
   const offset = page ? +page * +size : 0;
 
   // Récupération des photos existe dans la base

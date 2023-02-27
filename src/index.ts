@@ -7,16 +7,16 @@ import { AppDataSource } from "./config/dbConfig";
 
 const app = express();
 
-//Configuration et connexion à la base mysql
+// Configuration et connexion à la base mysql
 AppDataSource.initialize()
-  .then((res) => {
+  .then(() => {
     console.log("connexion établie");
   })
   .catch((error) => {
     console.log(`Erreur de la connexion: ${error}`);
   });
 
-// Autorisation des domaies
+// Autorisation n'importe quel domaine
 app.use(cors());
 
 // Parse application/json

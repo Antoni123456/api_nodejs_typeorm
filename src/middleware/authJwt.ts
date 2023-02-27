@@ -49,7 +49,7 @@ const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
         next();
         return;
       } else {
-        return res.status(404).json({ message: "Require Admin Role!" });
+        return res.status(404).json({ message: "Require ADMIN role!" });
       }
     }
   }
@@ -75,7 +75,7 @@ const isUser = async (req: Request, res: Response, next: NextFunction) => {
         next();
         return;
       } else {
-        return res.status(404).json({ message: "Require User Role!" });
+        return res.status(404).json({ message: "Require USER role!" });
       }
     }
   }
