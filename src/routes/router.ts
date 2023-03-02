@@ -28,7 +28,7 @@ const routes = (app: any) => {
   router.put("/photo/:id", editPhoto);
   router.delete("/photo/:id", deletePhoto);
 
-  // endpoint model Iamage
+  // endpoint model Image
   router.post("/upload", uploadFile.single("file"), uploadFiles);
 
   return app.use("/api", router);
